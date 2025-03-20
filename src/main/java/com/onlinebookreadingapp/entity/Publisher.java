@@ -1,8 +1,16 @@
 package com.onlinebookreadingapp.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
 import java.util.List;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -11,16 +19,14 @@ import java.util.List;
 @Entity
 public class Publisher {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long publisherId;
-    
-    private String publisherName;
-    private String publisherMobileNumber;
-    private String publisherEmail;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long publisherId;
 
-    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, orphanRemoval = true)
-    @ToString.Exclude  // Prevents infinite recursion
-    @EqualsAndHashCode.Exclude  // Prevents hashCode issues
-    private List<Book> publisherBooks;
+  private String publisherName;
+  private String publisherMobileNumber;
+  private String publisherEmail;
+
+  @ManyToMany
+  private List<Book> publisherBooks;
 }
